@@ -1,5 +1,7 @@
-package com.desafio.backend.application.useCases.cliente;
+package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
+import com.desafio.backend.application.useCases.cliente.ExcluirClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.contato.Contato;

@@ -1,6 +1,8 @@
-package com.desafio.backend.application.useCases.contato;
+package com.desafio.backend.unit.useCases.contato;
 
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
+import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
+import com.desafio.backend.application.useCases.contato.ListarContatosUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.contato.Contato;
 import org.junit.jupiter.api.Test;
@@ -10,13 +12,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-class EditarContatoUseCaseTest {
+class ListarContatosUseCaseTest {
 
     @Autowired
     private CadastrarClienteUseCase cadastrarCliente;
@@ -25,40 +28,34 @@ class EditarContatoUseCaseTest {
     private CadastrarContatoUseCase cadastrarContato;
 
     @Autowired
-    private EditarContatoUseCase editarContato;
+    private ListarContatosUseCase listarContatos;
 
     @Test
-    void deveEditarContatoComSucesso() {
+    void deveListarContatosDoCliente() {
         Cliente cliente = cadastrarCliente.execute(
                 new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
         );
-        Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
-        );
+        cadastrarContato.execute(new Contato(null, cliente.getId(), "Email", "joao@email.com", null));
+        cadastrarContato.execute(new Contato(null, cliente.getId(), "Telefone", "11999999999", null));
 
-        salvo.setValor("novo@email.com");
+        List<Contato> contatos = listarContatos.execute(cliente.getId());
 
-        assertDoesNotThrow(() -> editarContato.execute(salvo));
+        assertEquals(2, contatos.size());
     }
 
     @Test
-    void deveLancarExcecaoQuandoContatoNaoExiste() {
-        Contato inexistente = new Contato(9999, 1, "Email", "x@x.com", null);
-
-        assertThrows(IllegalArgumentException.class, () -> editarContato.execute(inexistente));
+    void deveLancarExcecaoQuandoClienteNaoExiste() {
+        assertThrows(IllegalArgumentException.class, () -> listarContatos.execute(9999));
     }
 
     @Test
-    void deveLancarExcecaoQuandoValorVazio() {
+    void deveRetornarListaVaziaSeClienteSemContatos() {
         Cliente cliente = cadastrarCliente.execute(
                 new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
         );
-        Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
-        );
 
-        salvo.setValor("");
+        List<Contato> contatos = listarContatos.execute(cliente.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> editarContato.execute(salvo));
+        assertTrue(contatos.isEmpty());
     }
 }

@@ -1,5 +1,7 @@
-package com.desafio.backend.application.useCases.cliente;
+package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
+import com.desafio.backend.application.useCases.cliente.EditarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

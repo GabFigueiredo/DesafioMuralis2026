@@ -1,5 +1,6 @@
-package com.desafio.backend.application.useCases.cliente;
+package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.junit.jupiter.api.Test;
