@@ -70,7 +70,7 @@ class EditarClienteControllerTest {
     }
 
     @Test
-    void deveRetornar400QuandoClienteNaoExiste() {
+    void deveRetornar404QuandoClienteNaoExiste() {
 
         cliente.setId(9999);
 
@@ -78,11 +78,11 @@ class EditarClienteControllerTest {
                 .uri("/clientes/9999")
                 .body(cliente)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isNotFound();
     }
 
     @Test
-    void deveRetornar400QuandoCpfJaExiste() {
+    void deveRetornar409QuandoCpfJaExiste() {
 
         clienteRepository.save(
                 new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null)
@@ -94,6 +94,6 @@ class EditarClienteControllerTest {
                 .uri("/clientes/" + cliente.getId())
                 .body(cliente)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isEqualTo(409);
     }
 }

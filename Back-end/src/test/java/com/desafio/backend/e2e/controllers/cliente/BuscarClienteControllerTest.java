@@ -79,12 +79,12 @@ class BuscarClienteControllerTest {
     }
 
     @Test
-    void deveRetornar400QuandoCpfNaoExiste() {
+    void deveRetornar404QuandoCpfNaoExiste() {
 
         client.get()
                 .uri("/clientes/cpf/000.000.000-00")
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isNotFound();
     }
 
     @Test

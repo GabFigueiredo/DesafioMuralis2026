@@ -1,9 +1,12 @@
 package com.desafio.backend.e2e.controllers.cliente;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.web.dto.cliente.CadastrarClienteRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,6 +22,9 @@ class CadastrarClienteControllerTest {
 
     private RestTestClient client;
 
+    @Autowired
+    private IClienteRepository clienteRepository;
+
     @LocalServerPort
     private int port;
 
@@ -28,6 +34,11 @@ class CadastrarClienteControllerTest {
                 .bindToServer()
                 .baseUrl("http://localhost:" + port)
                 .build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        clienteRepository.findAll().forEach(c -> clienteRepository.delete(c.getId()));
     }
 
     @Test
@@ -67,7 +78,7 @@ class CadastrarClienteControllerTest {
     }
 
     @Test
-    void deveRetornar400QuandoCpfDuplicado() {
+    void deveRetornar409QuandoCpfDuplicado() {
 
         CadastrarClienteRequest request = new CadastrarClienteRequest();
         request.setNome("Gabriel");
@@ -85,7 +96,7 @@ class CadastrarClienteControllerTest {
                 .uri("/clientes")
                 .body(request)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isEqualTo(409);
     }
 
     @Test

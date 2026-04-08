@@ -1,5 +1,7 @@
 package com.desafio.backend.application.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceAlreadyExists;
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class EditarClienteUseCase {
     public void execute(Cliente cliente) {
         // RN08 - Validate before editing
         clienteRepository.findById(cliente.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
 
         if (cliente.getNome() == null || cliente.getNome().isBlank())
             throw new IllegalArgumentException("Nome é obrigatório.");
@@ -31,7 +33,7 @@ public class EditarClienteUseCase {
         // RN03 - CPF único (exclude self)
         clienteRepository.findByCpf(cliente.getCpf()).ifPresent(existing -> {
             if (!existing.getId().equals(cliente.getId()))
-                throw new IllegalArgumentException("CPF já cadastrado.");
+                throw new ResourceAlreadyExists("CPF já cadastrado.");
         });
 
         clienteRepository.update(cliente);

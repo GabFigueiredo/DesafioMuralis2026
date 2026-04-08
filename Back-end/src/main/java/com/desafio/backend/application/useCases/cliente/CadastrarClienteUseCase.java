@@ -1,5 +1,6 @@
 package com.desafio.backend.application.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceAlreadyExists;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class CadastrarClienteUseCase {
 
         // RN03 - CPF único
         clienteRepository.findByCpf(cliente.getCpf()).ifPresent(c -> {
-            throw new IllegalArgumentException("CPF já cadastrado.");
+            throw new ResourceAlreadyExists("CPF já cadastrado.");
         });
 
         return clienteRepository.save(cliente);

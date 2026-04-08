@@ -74,6 +74,6 @@ class ExcluirClienteControllerTest {
         client.get()
                 .uri("/clientes/cpf/" + cliente.getCpf())
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isNotFound();
     }
 }
