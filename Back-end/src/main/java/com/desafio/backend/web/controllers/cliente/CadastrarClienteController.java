@@ -28,7 +28,7 @@ public class CadastrarClienteController {
                 request.getNome(),
                 request.getCpf(),
                 request.getDataNascimento(),
-                null
+                request.getEndereco()
         );
 
         Cliente salvo = cadastrarCliente.execute(cliente);

@@ -35,7 +35,7 @@ class EditarClienteControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 
@@ -85,7 +85,7 @@ class EditarClienteControllerTest {
     void deveRetornar409QuandoCpfJaExiste() {
 
         clienteRepository.save(
-                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null)
+                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123")
         );
 
         cliente.setCpf("222.222.222-22");

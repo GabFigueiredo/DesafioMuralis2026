@@ -34,22 +34,22 @@ class CadastrarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoNomeVazio() {
-        Cliente cliente = new Cliente(null, "", "123.456.789-00", LocalDate.of(1990, 1, 15), null);
+        Cliente cliente = new Cliente(null, "", "123.456.789-00", LocalDate.of(1990, 1, 15), "Rua A, 123");
 
         assertThrows(IllegalArgumentException.class, () -> cadastrarCliente.execute(cliente));
     }
 
     @Test
     void deveLancarExcecaoQuandoCpfNulo() {
-        Cliente cliente = new Cliente(null, "João Silva", null, LocalDate.of(1990, 1, 15), null);
+        Cliente cliente = new Cliente(null, "João Silva", null, LocalDate.of(1990, 1, 15), "Rua A, 123");
 
         assertThrows(IllegalArgumentException.class, () -> cadastrarCliente.execute(cliente));
     }
 
     @Test
     void deveLancarExcecaoQuandoCpfDuplicado() {
-        Cliente c1 = new Cliente(null, "João Silva", "123.456.789-00", LocalDate.of(1990, 1, 15), null);
-        Cliente c2 = new Cliente(null, "Maria Souza", "123.456.789-00", LocalDate.of(1985, 5, 20), null);
+        Cliente c1 = new Cliente(null, "João Silva", "123.456.789-00", LocalDate.of(1990, 1, 15), "Rua A, 123");
+        Cliente c2 = new Cliente(null, "Maria Souza", "123.456.789-00", LocalDate.of(1985, 5, 20), "Rua A, 123");
 
         cadastrarCliente.execute(c1);
 
@@ -58,7 +58,7 @@ class CadastrarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoDataNascimentoFutura() {
-        Cliente cliente = new Cliente(null, "João Silva", "999.999.999-99", LocalDate.now().plusDays(1), null);
+        Cliente cliente = new Cliente(null, "João Silva", "999.999.999-99", LocalDate.now().plusDays(1), "Rua A, 123");
 
         assertThrows(IllegalArgumentException.class, () -> cadastrarCliente.execute(cliente));
     }

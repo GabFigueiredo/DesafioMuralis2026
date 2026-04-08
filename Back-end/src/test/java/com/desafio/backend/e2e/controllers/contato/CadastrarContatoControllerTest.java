@@ -38,7 +38,7 @@ class CadastrarContatoControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 
@@ -50,7 +50,7 @@ class CadastrarContatoControllerTest {
     @Test
     void deveCadastrarContatoComSucesso() {
 
-        Contato contato = new Contato(null, null, "Email", "joao@email.com", "Trabalho");
+        Contato contato = new Contato(null, null, "Email", "joao@email.com", "alguma coisa");
 
         var result = client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -69,7 +69,7 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar400QuandoTipoVazio() {
 
-        Contato contato = new Contato(null, null, "", "joao@email.com", null);
+        Contato contato = new Contato(null, null, "", "joao@email.com", "alguma coisa");
 
         client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -81,7 +81,7 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar400QuandoValorVazio() {
 
-        Contato contato = new Contato(null, null, "Email", "", null);
+        Contato contato = new Contato(null, null, "Email", "", "alguma coisa");
 
         client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -93,7 +93,7 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar404QuandoClienteNaoExiste() {
 
-        Contato contato = new Contato(null, null, "Email", "joao@email.com", null);
+        Contato contato = new Contato(null, null, "Email", "joao@email.com", "alguma coisa");
 
         client.post()
                 .uri("/clientes/9999/contatos")

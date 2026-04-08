@@ -29,7 +29,7 @@ class EditarClienteUseCaseTest {
     @Test
     void deveEditarClienteComSucesso() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         salvo.setNome("João Atualizado");
@@ -40,7 +40,7 @@ class EditarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoClienteNaoExiste() {
-        Cliente inexistente = new Cliente(9999, "Fantasma", "000.000.000-00", LocalDate.of(1990, 1, 1), null);
+        Cliente inexistente = new Cliente(9999, "Fantasma", "000.000.000-00", LocalDate.of(1990, 1, 1), "Rua A, 123");
 
         assertThrows(ResourceNotFoundException.class, () -> editarCliente.execute(inexistente));
     }
@@ -48,10 +48,10 @@ class EditarClienteUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoCpfJaUsadoPorOutro() {
         Cliente c1 = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
         Cliente c2 = cadastrarCliente.execute(
-                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null)
+                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123")
         );
 
         c2.setCpf("111.111.111-11");
@@ -62,7 +62,7 @@ class EditarClienteUseCaseTest {
     @Test
     void devePermitirEdicaoComMesmoCpf() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         salvo.setNome("João Atualizado");

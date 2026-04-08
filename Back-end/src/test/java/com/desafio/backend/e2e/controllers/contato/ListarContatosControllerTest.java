@@ -74,7 +74,7 @@ class ListarContatosControllerTest {
     void deveRetornarListaVaziaParaClienteSemContatos() {
 
         Cliente semContatos = clienteRepository.save(
-                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null)
+                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123")
         );
 
         var response = client.get()

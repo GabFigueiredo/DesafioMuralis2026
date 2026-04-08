@@ -33,10 +33,10 @@ class ExcluirContatoUseCaseTest {
     @Test
     void deveExcluirContatoComSucesso() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "alguma coisa")
         );
         Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+                new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa")
         );
 
         assertDoesNotThrow(() -> excluirContato.execute(salvo.getId()));

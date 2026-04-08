@@ -32,13 +32,13 @@ class CadastrarContatoUseCaseTest {
     @BeforeEach
     void setup() {
         clienteSalvo = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "alguma coisa")
         );
     }
 
     @Test
     void deveCadastrarContatoComSucesso() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "joao@email.com", null);
+        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "joao@email.com", "alguma coisa");
 
         Contato salvo = cadastrarContato.execute(contato);
 
@@ -47,21 +47,21 @@ class CadastrarContatoUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoTipoVazio() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "", "joao@email.com", null);
+        Contato contato = new Contato(null, clienteSalvo.getId(), "", "joao@email.com", "alguma coisa");
 
         assertThrows(IllegalArgumentException.class, () -> cadastrarContato.execute(contato));
     }
 
     @Test
     void deveLancarExcecaoQuandoValorVazio() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "", null);
+        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "", "alguma coisa");
 
         assertThrows(IllegalArgumentException.class, () -> cadastrarContato.execute(contato));
     }
 
     @Test
     void deveLancarExcecaoQuandoClienteNaoExiste() {
-        Contato contato = new Contato(null, 9999, "Email", "joao@email.com", null);
+        Contato contato = new Contato(null, 9999, "Email", "joao@email.com", "alguma coisa");
 
         assertThrows(ResourceNotFoundException.class, () -> cadastrarContato.execute(contato));
     }

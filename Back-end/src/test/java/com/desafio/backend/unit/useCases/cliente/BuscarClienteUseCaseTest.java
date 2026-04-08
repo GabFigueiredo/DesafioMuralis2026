@@ -28,7 +28,7 @@ class BuscarClienteUseCaseTest {
 
     @Test
     void deveBuscarPorCpfComSucesso() {
-        cadastrarCliente.execute(new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null));
+        cadastrarCliente.execute(new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
 
         Cliente encontrado = buscarCliente.executeByCpf("111.111.111-11");
 
@@ -37,7 +37,7 @@ class BuscarClienteUseCaseTest {
 
     @Test
     void deveBuscarPorNomeComSucesso() {
-        cadastrarCliente.execute(new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null));
+        cadastrarCliente.execute(new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
 
         List<Cliente> encontrados = buscarCliente.executeByNome("João");
 

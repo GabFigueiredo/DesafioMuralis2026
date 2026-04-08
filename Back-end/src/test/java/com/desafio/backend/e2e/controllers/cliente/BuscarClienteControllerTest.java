@@ -37,7 +37,7 @@ class BuscarClienteControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "123.456.789-00", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João Silva", "123.456.789-00", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 

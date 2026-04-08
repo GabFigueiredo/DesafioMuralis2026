@@ -33,10 +33,10 @@ class EditarContatoUseCaseTest {
     @Test
     void deveEditarContatoComSucesso() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "alguma coisa")
         );
         Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+                new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa")
         );
 
         salvo.setValor("novo@email.com");
@@ -46,7 +46,7 @@ class EditarContatoUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoContatoNaoExiste() {
-        Contato inexistente = new Contato(9999, 1, "Email", "x@x.com", null);
+        Contato inexistente = new Contato(9999, 1, "Email", "x@x.com", "alguma coisa");
 
         assertThrows(ResourceNotFoundException.class, () -> editarContato.execute(inexistente));
     }
@@ -54,10 +54,10 @@ class EditarContatoUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoValorVazio() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "alguma coisa")
         );
         Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+                new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa")
         );
 
         salvo.setValor("");

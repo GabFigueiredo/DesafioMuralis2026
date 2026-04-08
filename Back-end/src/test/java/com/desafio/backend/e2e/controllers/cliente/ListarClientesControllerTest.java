@@ -34,8 +34,8 @@ class ListarClientesControllerTest {
                 .baseUrl("http://localhost:" + port)
                 .build();
 
-        clienteRepository.save(new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null));
-        clienteRepository.save(new Cliente(null, "Maria Souza", "222.222.222-22", LocalDate.of(1992, 3, 3), null));
+        clienteRepository.save(new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
+        clienteRepository.save(new Cliente(null, "Maria Souza", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123"));
     }
 
     @AfterEach

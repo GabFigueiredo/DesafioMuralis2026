@@ -35,7 +35,7 @@ class ExcluirClienteControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 

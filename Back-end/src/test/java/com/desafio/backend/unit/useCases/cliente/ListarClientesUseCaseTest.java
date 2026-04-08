@@ -27,8 +27,8 @@ class ListarClientesUseCaseTest {
 
     @Test
     void deveRetornarListaDeClientes() {
-        cadastrarCliente.execute(new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null));
-        cadastrarCliente.execute(new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null));
+        cadastrarCliente.execute(new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
+        cadastrarCliente.execute(new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123"));
 
         List<Cliente> clientes = listarClientes.execute();
 

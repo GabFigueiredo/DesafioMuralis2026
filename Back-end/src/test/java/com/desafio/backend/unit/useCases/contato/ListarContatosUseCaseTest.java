@@ -34,10 +34,10 @@ class ListarContatosUseCaseTest {
     @Test
     void deveListarContatosDoCliente() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
-        cadastrarContato.execute(new Contato(null, cliente.getId(), "Email", "joao@email.com", null));
-        cadastrarContato.execute(new Contato(null, cliente.getId(), "Telefone", "11999999999", null));
+        cadastrarContato.execute(new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa"));
+        cadastrarContato.execute(new Contato(null, cliente.getId(), "Telefone", "11999999999", "alguma coisa"));
 
         List<Contato> contatos = listarContatos.execute(cliente.getId());
 
@@ -52,7 +52,7 @@ class ListarContatosUseCaseTest {
     @Test
     void deveRetornarListaVaziaSeClienteSemContatos() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
+                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         List<Contato> contatos = listarContatos.execute(cliente.getId());
