@@ -1,5 +1,7 @@
 package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceAlreadyExists;
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.cliente.EditarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
@@ -40,7 +42,7 @@ class EditarClienteUseCaseTest {
     void deveLancarExcecaoQuandoClienteNaoExiste() {
         Cliente inexistente = new Cliente(9999, "Fantasma", "000.000.000-00", LocalDate.of(1990, 1, 1), null);
 
-        assertThrows(IllegalArgumentException.class, () -> editarCliente.execute(inexistente));
+        assertThrows(ResourceNotFoundException.class, () -> editarCliente.execute(inexistente));
     }
 
     @Test
@@ -52,9 +54,9 @@ class EditarClienteUseCaseTest {
                 new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), null)
         );
 
-        c2.setCpf("111.111.111-11"); // trying to steal c1's CPF
+        c2.setCpf("111.111.111-11");
 
-        assertThrows(IllegalArgumentException.class, () -> editarCliente.execute(c2));
+        assertThrows(ResourceAlreadyExists.class, () -> editarCliente.execute(c2));
     }
 
     @Test

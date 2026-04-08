@@ -1,5 +1,6 @@
 package com.desafio.backend.application.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class ExcluirClienteUseCase {
 
     public void execute(Integer id) {
         clienteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
         clienteRepository.delete(id);
     }
 }

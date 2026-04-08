@@ -1,5 +1,6 @@
 package com.desafio.backend.application.useCases.contato;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class ExcluirContatoUseCase {
 
     public void execute(Integer id) {
         contatoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Contato não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado."));
         contatoRepository.delete(id);
     }
 }

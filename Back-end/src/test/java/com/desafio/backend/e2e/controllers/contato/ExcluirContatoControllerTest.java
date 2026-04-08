@@ -1,7 +1,9 @@
-package com.desafio.backend.e2e.controllers.cliente;
+package com.desafio.backend.e2e.controllers.contato;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
+import com.desafio.backend.enterprise.contato.Contato;
+import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +15,11 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class ExcluirClienteControllerTest {
+class ExcluirContatoControllerTest {
 
     private RestTestClient client;
 
@@ -25,7 +29,11 @@ class ExcluirClienteControllerTest {
     @Autowired
     private IClienteRepository clienteRepository;
 
+    @Autowired
+    private IContatoRepository contatoRepository;
+
     private Cliente cliente;
+    private Contato contato;
 
     @BeforeEach
     void setup() {
@@ -37,6 +45,10 @@ class ExcluirClienteControllerTest {
         cliente = clienteRepository.save(
                 new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), null)
         );
+
+        contato = contatoRepository.save(
+                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+        );
     }
 
     @AfterEach
@@ -45,34 +57,17 @@ class ExcluirClienteControllerTest {
     }
 
     @Test
-    void deveExcluirClienteComSucesso() {
-
+    void deveExcluirContatoComSucesso() {
         client.delete()
-                .uri("/clientes/" + cliente.getId())
+                .uri("/clientes/" + cliente.getId() + "/contatos/" + contato.getId())
                 .exchange()
                 .expectStatus().isNoContent();
     }
 
     @Test
-    void deveRetornar400QuandoClienteNaoExiste() {
-
+    void deveRetornar404QuandoContatoNaoExiste() {
         client.delete()
-                .uri("/clientes/9999")
-                .exchange()
-                .expectStatus().isNotFound();
-    }
-
-    @Test
-    void deveExcluirContatosJuntoComCliente() {
-
-        client.delete()
-                .uri("/clientes/" + cliente.getId())
-                .exchange()
-                .expectStatus().isNoContent();
-
-        // valida que o cliente realmente não existe mais
-        client.get()
-                .uri("/clientes/cpf/" + cliente.getCpf())
+                .uri("/clientes/" + cliente.getId() + "/contatos/9999")
                 .exchange()
                 .expectStatus().isNotFound();
     }

@@ -1,5 +1,6 @@
 package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.BuscarClienteUseCase;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
@@ -45,7 +46,7 @@ class BuscarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoCpfNaoEncontrado() {
-        assertThrows(IllegalArgumentException.class, () -> buscarCliente.executeByCpf("000.000.000-00"));
+        assertThrows(ResourceNotFoundException.class, () -> buscarCliente.executeByCpf("000.000.000-00"));
     }
 
     @Test

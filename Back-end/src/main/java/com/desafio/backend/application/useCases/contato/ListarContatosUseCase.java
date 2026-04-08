@@ -1,5 +1,6 @@
 package com.desafio.backend.application.useCases.contato;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
@@ -19,7 +20,7 @@ public class ListarContatosUseCase {
 
     public List<Contato> execute(Integer clienteId) {
         clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
         return contatoRepository.findByClienteId(clienteId);
     }
 }

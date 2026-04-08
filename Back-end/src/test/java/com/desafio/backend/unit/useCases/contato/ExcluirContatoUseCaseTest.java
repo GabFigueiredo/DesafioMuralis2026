@@ -1,5 +1,6 @@
 package com.desafio.backend.unit.useCases.contato;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.application.useCases.contato.ExcluirContatoUseCase;
@@ -43,6 +44,6 @@ class ExcluirContatoUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoContatoNaoExiste() {
-        assertThrows(IllegalArgumentException.class, () -> excluirContato.execute(9999));
+        assertThrows(ResourceNotFoundException.class, () -> excluirContato.execute(9999));
     }
 }

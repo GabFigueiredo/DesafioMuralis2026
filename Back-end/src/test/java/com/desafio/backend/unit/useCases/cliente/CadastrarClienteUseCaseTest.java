@@ -1,5 +1,6 @@
 package com.desafio.backend.unit.useCases.cliente;
 
+import com.desafio.backend.application.exceptions.ResourceAlreadyExists;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
@@ -52,7 +53,7 @@ class CadastrarClienteUseCaseTest {
 
         cadastrarCliente.execute(c1);
 
-        assertThrows(IllegalArgumentException.class, () -> cadastrarCliente.execute(c2));
+        assertThrows(ResourceAlreadyExists.class, () -> cadastrarCliente.execute(c2));
     }
 
     @Test

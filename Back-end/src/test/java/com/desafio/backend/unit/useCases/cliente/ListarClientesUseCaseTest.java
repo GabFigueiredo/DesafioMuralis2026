@@ -40,5 +40,6 @@ class ListarClientesUseCaseTest {
         List<Cliente> clientes = listarClientes.execute();
 
         assertNotNull(clientes);
+        assertTrue(clientes.isEmpty());
     }
 }

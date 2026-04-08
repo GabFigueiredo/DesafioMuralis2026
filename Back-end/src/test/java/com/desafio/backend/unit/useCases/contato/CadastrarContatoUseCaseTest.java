@@ -1,5 +1,6 @@
 package com.desafio.backend.unit.useCases.contato;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
@@ -62,6 +63,6 @@ class CadastrarContatoUseCaseTest {
     void deveLancarExcecaoQuandoClienteNaoExiste() {
         Contato contato = new Contato(null, 9999, "Email", "joao@email.com", null);
 
-        assertThrows(IllegalArgumentException.class, () -> cadastrarContato.execute(contato));
+        assertThrows(ResourceNotFoundException.class, () -> cadastrarContato.execute(contato));
     }
 }

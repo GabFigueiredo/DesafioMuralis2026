@@ -1,5 +1,6 @@
 package com.desafio.backend.application.useCases.contato;
 
+import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class EditarContatoUseCase {
 
     public void execute(Contato contato) {
         contatoRepository.findById(contato.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Contato não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado."));
 
         if (contato.getTipo() == null || contato.getTipo().isBlank())
             throw new IllegalArgumentException("Tipo do contato é obrigatório.");
