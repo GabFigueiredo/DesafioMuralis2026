@@ -2,6 +2,7 @@ package com.desafio.backend.infra.database;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,7 +29,7 @@ public class ClienteRepositoryJDBC implements IClienteRepository {
     private RowMapper<Cliente> rowMapper = (rs, rowNum) -> new Cliente(
             rs.getInt("id"),
             rs.getString("nome"),
-            rs.getString("cpf"),
+            new CPF(rs.getString("cpf")),
             rs.getDate("data_nascimento") != null
                     ? rs.getDate("data_nascimento").toLocalDate()
                     : null,
@@ -73,7 +74,7 @@ public class ClienteRepositoryJDBC implements IClienteRepository {
         jdbc.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, cliente.getNome());
-            ps.setString(2, cliente.getCpf());
+            ps.setString(2, cliente.getCpf().getValue());
 
             if (cliente.getDataNascimento() != null) {
                 ps.setDate(3, Date.valueOf(cliente.getDataNascimento()));
@@ -103,7 +104,7 @@ public class ClienteRepositoryJDBC implements IClienteRepository {
 
         jdbc.update(sql,
                 cliente.getNome(),
-                cliente.getCpf(),
+                cliente.getCpf().getValue(),
                 cliente.getDataNascimento() != null ? Date.valueOf(cliente.getDataNascimento()) : null,
                 cliente.getEndereco(),
                 cliente.getId()

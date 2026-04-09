@@ -2,6 +2,7 @@ package com.desafio.backend.e2e.controllers.cliente;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.web.dto.cliente.CadastrarClienteRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ class CadastrarClienteControllerTest {
 
         CadastrarClienteRequest request = new CadastrarClienteRequest();
         request.setNome("Gabriel");
-        request.setCpf("123.456.789-00");
+        request.setCpf("63929247011");
         request.setDataNascimento(LocalDate.of(2000, 1, 1));
 
         var result = client.post()
@@ -68,7 +69,7 @@ class CadastrarClienteControllerTest {
 
         CadastrarClienteRequest request = new CadastrarClienteRequest();
         request.setNome("");
-        request.setCpf("123.456.789-00");
+        request.setCpf("63929247011");
 
         client.post()
                 .uri("/clientes")
@@ -82,7 +83,7 @@ class CadastrarClienteControllerTest {
 
         CadastrarClienteRequest request = new CadastrarClienteRequest();
         request.setNome("Gabriel");
-        request.setCpf("123.456.789-00");
+        request.setCpf("63929247011");
 
         // primeiro cadastro
         client.post()
@@ -104,7 +105,7 @@ class CadastrarClienteControllerTest {
 
         CadastrarClienteRequest request = new CadastrarClienteRequest();
         request.setNome("Gabriel");
-        request.setCpf("123.456.789-00");
+        request.setCpf("63929247011");
         request.setDataNascimento(LocalDate.now().plusDays(1));
 
         client.post()

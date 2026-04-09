@@ -2,6 +2,7 @@ package com.desafio.backend.web.controllers.cliente;
 
 import com.desafio.backend.application.useCases.cliente.BuscarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class BuscarClienteController {
     // Buscar por CPF
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity<Cliente> buscarPorCpf(@PathVariable String cpf) {
-        Cliente cliente = buscarCliente.executeByCpf(cpf);
+        Cliente cliente = buscarCliente.executeByCpf(new CPF(cpf));
         return ResponseEntity.ok(cliente);
     }
 }

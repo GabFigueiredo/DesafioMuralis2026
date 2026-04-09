@@ -5,6 +5,7 @@ import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.cliente.EditarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,7 @@ class EditarClienteUseCaseTest {
     @Test
     void deveEditarClienteComSucesso() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         salvo.setNome("João Atualizado");
@@ -40,7 +41,7 @@ class EditarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoClienteNaoExiste() {
-        Cliente inexistente = new Cliente(9999, "Fantasma", "000.000.000-00", LocalDate.of(1990, 1, 1), "Rua A, 123");
+        Cliente inexistente = new Cliente(9999, "Fantasma", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123");
 
         assertThrows(ResourceNotFoundException.class, () -> editarCliente.execute(inexistente));
     }
@@ -48,13 +49,13 @@ class EditarClienteUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoCpfJaUsadoPorOutro() {
         Cliente c1 = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
         Cliente c2 = cadastrarCliente.execute(
-                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123")
+                new Cliente(null, "Maria", new CPF("52998224725"), LocalDate.of(1992, 3, 3), "Rua A, 123")
         );
 
-        c2.setCpf("111.111.111-11");
+        c2.setCpf(new CPF("63929247011"));
 
         assertThrows(ResourceAlreadyExists.class, () -> editarCliente.execute(c2));
     }
@@ -62,7 +63,7 @@ class EditarClienteUseCaseTest {
     @Test
     void devePermitirEdicaoComMesmoCpf() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         salvo.setNome("João Atualizado");

@@ -4,6 +4,7 @@ import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.application.useCases.cliente.BuscarClienteUseCase;
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,16 +29,16 @@ class BuscarClienteUseCaseTest {
 
     @Test
     void deveBuscarPorCpfComSucesso() {
-        cadastrarCliente.execute(new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
+        cadastrarCliente.execute(new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123"));
 
-        Cliente encontrado = buscarCliente.executeByCpf("111.111.111-11");
+        Cliente encontrado = buscarCliente.executeByCpf(new CPF("63929247011"));
 
         assertEquals("João", encontrado.getNome());
     }
 
     @Test
     void deveBuscarPorNomeComSucesso() {
-        cadastrarCliente.execute(new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123"));
+        cadastrarCliente.execute(new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123"));
 
         List<Cliente> encontrados = buscarCliente.executeByNome("João");
 
@@ -46,7 +47,7 @@ class BuscarClienteUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoCpfNaoEncontrado() {
-        assertThrows(ResourceNotFoundException.class, () -> buscarCliente.executeByCpf("000.000.000-00"));
+        assertThrows(ResourceNotFoundException.class, () -> buscarCliente.executeByCpf(new CPF("63929247011")));
     }
 
     @Test

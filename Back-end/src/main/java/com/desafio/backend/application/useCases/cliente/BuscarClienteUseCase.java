@@ -3,6 +3,7 @@ package com.desafio.backend.application.useCases.cliente;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.application.exceptions.ResourceNotFoundException;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,10 +30,8 @@ public class BuscarClienteUseCase {
     }
 
     // RF05 - Search by name or CPF
-    public Cliente executeByCpf(String cpf) {
-        if (cpf == null || cpf.isBlank())
-            throw new IllegalArgumentException("CPF para busca não pode ser vazio.");
-        return clienteRepository.findByCpf(cpf)
+    public Cliente executeByCpf(CPF cpf) {
+        return clienteRepository.findByCpf(cpf.getValue())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
     }
 }

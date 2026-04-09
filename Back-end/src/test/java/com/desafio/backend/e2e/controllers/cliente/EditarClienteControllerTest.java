@@ -2,6 +2,7 @@ package com.desafio.backend.e2e.controllers.cliente;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class EditarClienteControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 
@@ -85,10 +86,10 @@ class EditarClienteControllerTest {
     void deveRetornar409QuandoCpfJaExiste() {
 
         clienteRepository.save(
-                new Cliente(null, "Maria", "222.222.222-22", LocalDate.of(1992, 3, 3), "Rua A, 123")
+                new Cliente(null, "Maria", new CPF("52998224725"), LocalDate.of(1992, 3, 3), "Rua A, 123")
         );
 
-        cliente.setCpf("222.222.222-22");
+        cliente.setCpf(new CPF("52998224725"));
 
         client.put()
                 .uri("/clientes/" + cliente.getId())

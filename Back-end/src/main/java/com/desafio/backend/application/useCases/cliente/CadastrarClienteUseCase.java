@@ -20,9 +20,6 @@ public class CadastrarClienteUseCase {
         if (cliente.getNome() == null || cliente.getNome().isBlank())
             throw new IllegalArgumentException("Nome é obrigatório.");
 
-        if (cliente.getCpf() == null || cliente.getCpf().isBlank())
-            throw new IllegalArgumentException("CPF é obrigatório.");
-
         // RN04 - Nome não pode estar vazio (redundant but explicit)
         if (cliente.getNome().trim().isEmpty())
             throw new IllegalArgumentException("Nome não pode estar vazio.");
@@ -32,7 +29,7 @@ public class CadastrarClienteUseCase {
             throw new IllegalArgumentException("Data de nascimento inválida.");
 
         // RN03 - CPF único
-        clienteRepository.findByCpf(cliente.getCpf()).ifPresent(c -> {
+        clienteRepository.findByCpf(cliente.getCpf().getValue()).ifPresent(c -> {
             throw new ResourceAlreadyExists("CPF já cadastrado.");
         });
 

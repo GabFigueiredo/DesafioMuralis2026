@@ -5,6 +5,7 @@ import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.cliente.ExcluirClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class ExcluirClienteUseCaseTest {
     @Test
     void deveExcluirClienteComSucesso() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         assertDoesNotThrow(() -> excluirCliente.execute(salvo.getId()));
@@ -47,7 +48,7 @@ class ExcluirClienteUseCaseTest {
     @Test
     void deveExcluirContatosAoExcluirCliente() {
         Cliente salvo = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
         cadastrarContato.execute(
                 new Contato(null, salvo.getId(), "Email", "joao@email.com", "Rua A, 123")

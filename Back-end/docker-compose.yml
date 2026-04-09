@@ -6,8 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: desafio_muralis
-      MYSQL_USER: umc
-      MYSQL_PASSWORD: umc123
+      MYSQL_USER: desafio
+      MYSQL_PASSWORD: desafio123
     ports:
       - "3306:3306"
     volumes:

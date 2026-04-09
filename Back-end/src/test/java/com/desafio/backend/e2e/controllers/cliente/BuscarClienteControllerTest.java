@@ -2,6 +2,7 @@ package com.desafio.backend.e2e.controllers.cliente;
 
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class BuscarClienteControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", "123.456.789-00", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
     }
 
@@ -51,7 +52,7 @@ class BuscarClienteControllerTest {
     void deveBuscarClientePorCpf() {
 
         var result = client.get()
-                .uri("/clientes/cpf/" + cliente.getCpf())
+                .uri("/clientes/cpf/" + cliente.getCpf().getValue())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Cliente.class)
@@ -60,7 +61,7 @@ class BuscarClienteControllerTest {
         Cliente response = result.getResponseBody();
 
         assertNotNull(response);
-        assertEquals(cliente.getCpf(), response.getCpf());
+        assertEquals(cliente.getCpf().getValue(), response.getCpf().getValue());
     }
 
     @Test
@@ -82,7 +83,7 @@ class BuscarClienteControllerTest {
     void deveRetornar404QuandoCpfNaoExiste() {
 
         client.get()
-                .uri("/clientes/cpf/000.000.000-00")
+                .uri("/clientes/cpf/52998224725")
                 .exchange()
                 .expectStatus().isNotFound();
     }

@@ -5,6 +5,7 @@ import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.application.useCases.contato.ListarContatosUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ class ListarContatosUseCaseTest {
     @Test
     void deveListarContatosDoCliente() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
         cadastrarContato.execute(new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa"));
         cadastrarContato.execute(new Contato(null, cliente.getId(), "Telefone", "11999999999", "alguma coisa"));
@@ -52,7 +53,7 @@ class ListarContatosUseCaseTest {
     @Test
     void deveRetornarListaVaziaSeClienteSemContatos() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
 
         List<Contato> contatos = listarContatos.execute(cliente.getId());

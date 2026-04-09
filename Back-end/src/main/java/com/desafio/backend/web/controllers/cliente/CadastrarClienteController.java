@@ -2,6 +2,7 @@ package com.desafio.backend.web.controllers.cliente;
 
 import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.web.dto.cliente.CadastrarClienteRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class CadastrarClienteController {
         Cliente cliente = new Cliente(
                 null,
                 request.getNome(),
-                request.getCpf(),
+                new CPF(request.getCpf()),
                 request.getDataNascimento(),
                 request.getEndereco()
         );

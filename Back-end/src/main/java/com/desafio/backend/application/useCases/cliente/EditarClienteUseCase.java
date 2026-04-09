@@ -24,14 +24,11 @@ public class EditarClienteUseCase {
         if (cliente.getNome() == null || cliente.getNome().isBlank())
             throw new IllegalArgumentException("Nome é obrigatório.");
 
-        if (cliente.getCpf() == null || cliente.getCpf().isBlank())
-            throw new IllegalArgumentException("CPF é obrigatório.");
-
         if (cliente.getDataNascimento() != null && cliente.getDataNascimento().isAfter(LocalDate.now()))
             throw new IllegalArgumentException("Data de nascimento inválida.");
 
         // RN03 - CPF único (exclude self)
-        clienteRepository.findByCpf(cliente.getCpf()).ifPresent(existing -> {
+        clienteRepository.findByCpf(cliente.getCpf().getValue()).ifPresent(existing -> {
             if (!existing.getId().equals(cliente.getId()))
                 throw new ResourceAlreadyExists("CPF já cadastrado.");
         });

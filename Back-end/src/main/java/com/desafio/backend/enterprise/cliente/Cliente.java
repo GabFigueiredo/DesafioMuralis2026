@@ -1,17 +1,19 @@
 package com.desafio.backend.enterprise.cliente;
 
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
+
 import java.time.LocalDate;
 
 public class Cliente {
     private Integer id;
     private String nome;
-    private String cpf;
+    private CPF cpf;
     private LocalDate dataNascimento;
     private String endereco;
 
     public Cliente() {}
 
-    public Cliente(Integer id, String nome, String cpf, LocalDate dataNascimento, String endereco) {
+    public Cliente(Integer id, String nome, CPF cpf, LocalDate dataNascimento, String endereco) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -26,8 +28,8 @@ public class Cliente {
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    public CPF getCpf() { return cpf; }
+    public void setCpf(CPF cpf) { this.cpf = cpf; }
 
     public LocalDate getDataNascimento() { return dataNascimento; }
     public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }

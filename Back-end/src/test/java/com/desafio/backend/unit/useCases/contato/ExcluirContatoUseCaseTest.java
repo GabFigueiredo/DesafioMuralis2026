@@ -5,6 +5,7 @@ import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
 import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.application.useCases.contato.ExcluirContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ class ExcluirContatoUseCaseTest {
     @Test
     void deveExcluirContatoComSucesso() {
         Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", "111.111.111-11", LocalDate.of(1990, 1, 1), "alguma coisa")
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "alguma coisa")
         );
         Contato salvo = cadastrarContato.execute(
                 new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa")
