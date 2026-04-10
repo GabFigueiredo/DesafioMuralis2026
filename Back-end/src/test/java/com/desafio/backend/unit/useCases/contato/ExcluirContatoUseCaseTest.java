@@ -7,6 +7,8 @@ import com.desafio.backend.application.useCases.contato.ExcluirContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +39,7 @@ class ExcluirContatoUseCaseTest {
                 new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "alguma coisa")
         );
         Contato salvo = cadastrarContato.execute(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa")
+                new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "alguma coisa")
         );
 
         assertDoesNotThrow(() -> excluirContato.execute(salvo.getId()));

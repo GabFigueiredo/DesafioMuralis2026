@@ -5,6 +5,8 @@ import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +50,7 @@ class ExcluirContatoControllerTest {
         );
 
         contato = contatoRepository.save(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+                new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), null)
         );
     }
 

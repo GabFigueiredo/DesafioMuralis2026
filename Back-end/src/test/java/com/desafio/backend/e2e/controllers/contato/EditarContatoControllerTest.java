@@ -5,6 +5,8 @@ import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -46,7 +49,7 @@ class EditarContatoControllerTest {
         );
 
         contato = contatoRepository.save(
-                new Contato(null, cliente.getId(), "Email", "joao@email.com", null)
+                new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), null)
         );
     }
 
@@ -58,11 +61,17 @@ class EditarContatoControllerTest {
     @Test
     void deveEditarContatoComSucesso() {
 
-        contato.setValor("novo@email.com");
+        contato.setContatoValor(new ContatoValor(TipoContato.EMAIL, "novo@email.com"));
+
+        Map<String, Object> payload = Map.of(
+                "tipo", "EMAIL",
+                "valor", "gabriel@email.com",
+                "observacao", "outra coisa"
+        );
 
         client.put()
                 .uri("/clientes/" + cliente.getId() + "/contatos/" + contato.getId())
-                .body(contato)
+                .body(payload)
                 .exchange()
                 .expectStatus().isNoContent();
     }
@@ -70,11 +79,15 @@ class EditarContatoControllerTest {
     @Test
     void deveRetornar400QuandoValorVazio() {
 
-        contato.setValor("");
+        Map<String, Object> payload = Map.of(
+                "tipo", "EMAIL",
+                "valor", "",
+                "observacao", "outra coisa"
+        );
 
         client.put()
                 .uri("/clientes/" + cliente.getId() + "/contatos/" + contato.getId())
-                .body(contato)
+                .body(payload)
                 .exchange()
                 .expectStatus().isBadRequest();
     }
@@ -82,11 +95,15 @@ class EditarContatoControllerTest {
     @Test
     void deveRetornar404QuandoContatoNaoExiste() {
 
-        contato.setValor("novo@email.com");
+        Map<String, Object> payload = Map.of(
+                "tipo", "EMAIL",
+                "valor", "gabriel@email.com",
+                "observacao", "outra coisa"
+        );
 
         client.put()
                 .uri("/clientes/" + cliente.getId() + "/contatos/9999")
-                .body(contato)
+                .body(payload)
                 .exchange()
                 .expectStatus().isNotFound();
     }

@@ -8,6 +8,8 @@ import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +53,7 @@ class ExcluirClienteUseCaseTest {
                 new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
         cadastrarContato.execute(
-                new Contato(null, salvo.getId(), "Email", "joao@email.com", "Rua A, 123")
+                new Contato(null, salvo.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "Rua A, 123")
         );
 
         excluirCliente.execute(salvo.getId());

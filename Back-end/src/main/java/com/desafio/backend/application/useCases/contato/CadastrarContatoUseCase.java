@@ -21,11 +21,21 @@ public class CadastrarContatoUseCase {
         clienteRepository.findById(contato.getClienteId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
 
+
+        if (contato.getContatoValor().getValue() == null) {
+            System.out.println("é nulo");
+        }
+
         // RN02 - Tipo e Valor obrigatórios
-        if (contato.getTipo() == null || contato.getTipo().isBlank())
+        if (contato.getContatoValor().getTipo() == null)
             throw new IllegalArgumentException("Tipo do contato é obrigatório.");
 
-        if (contato.getValor() == null || contato.getValor().isBlank())
+        System.out.println("BATEU AQUI");
+        System.out.println("BATEU AQUI");
+        System.out.println("BATEU AQUI");
+        System.out.println("BATEU AQUI");
+
+        if (contato.getContatoValor().getValue() == null || contato.getContatoValor().getValue().isBlank())
             throw new IllegalArgumentException("Valor do contato é obrigatório.");
 
         return contatoRepository.save(contato);

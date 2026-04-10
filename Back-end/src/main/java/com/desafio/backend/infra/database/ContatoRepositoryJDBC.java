@@ -2,6 +2,8 @@ package com.desafio.backend.infra.database;
 
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -26,8 +28,7 @@ public class ContatoRepositoryJDBC implements IContatoRepository {
     private final RowMapper<Contato> rowMapper = (rs, rowNum) -> new Contato(
             rs.getInt("id"),
             rs.getInt("cliente_id"),
-            rs.getString("tipo"),
-            rs.getString("valor"),
+            new ContatoValor(TipoContato.valueOf(rs.getString("tipo")), rs.getString("valor")),
             rs.getString("observacao")
     );
 
@@ -60,8 +61,8 @@ public class ContatoRepositoryJDBC implements IContatoRepository {
             );
 
             ps.setInt(1, contato.getClienteId());
-            ps.setString(2, contato.getTipo());
-            ps.setString(3, contato.getValor());
+            ps.setString(2, contato.getContatoValor().getTipo().toString());
+            ps.setString(3, contato.getContatoValor().getValue());
             ps.setString(4, contato.getObservacao());
 
             return ps;
@@ -84,8 +85,8 @@ public class ContatoRepositoryJDBC implements IContatoRepository {
 
         jdbc.update(sql,
                 contato.getClienteId(),
-                contato.getTipo(),
-                contato.getValor(),
+                contato.getContatoValor().getTipo().toString(),
+                contato.getContatoValor().getValue(),
                 contato.getObservacao(),
                 contato.getId()
         );

@@ -6,6 +6,8 @@ import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ class CadastrarContatoUseCaseTest {
 
     @Test
     void deveCadastrarContatoComSucesso() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "joao@email.com", "alguma coisa");
+        Contato contato = new Contato(null, clienteSalvo.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "alguma coisa");
 
         Contato salvo = cadastrarContato.execute(contato);
 
@@ -47,22 +49,8 @@ class CadastrarContatoUseCaseTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoTipoVazio() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "", "joao@email.com", "alguma coisa");
-
-        assertThrows(IllegalArgumentException.class, () -> cadastrarContato.execute(contato));
-    }
-
-    @Test
-    void deveLancarExcecaoQuandoValorVazio() {
-        Contato contato = new Contato(null, clienteSalvo.getId(), "Email", "", "alguma coisa");
-
-        assertThrows(IllegalArgumentException.class, () -> cadastrarContato.execute(contato));
-    }
-
-    @Test
     void deveLancarExcecaoQuandoClienteNaoExiste() {
-        Contato contato = new Contato(null, 9999, "Email", "joao@email.com", "alguma coisa");
+        Contato contato = new Contato(null, 9999, new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "alguma coisa");
 
         assertThrows(ResourceNotFoundException.class, () -> cadastrarContato.execute(contato));
     }

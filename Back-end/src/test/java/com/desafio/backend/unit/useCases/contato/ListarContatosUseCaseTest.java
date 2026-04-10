@@ -7,6 +7,8 @@ import com.desafio.backend.application.useCases.contato.ListarContatosUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,8 +39,8 @@ class ListarContatosUseCaseTest {
         Cliente cliente = cadastrarCliente.execute(
                 new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
         );
-        cadastrarContato.execute(new Contato(null, cliente.getId(), "Email", "joao@email.com", "alguma coisa"));
-        cadastrarContato.execute(new Contato(null, cliente.getId(), "Telefone", "11999999999", "alguma coisa"));
+        cadastrarContato.execute(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "alguma coisa"));
+        cadastrarContato.execute(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.TELEFONE, "11999999999"), "alguma coisa"));
 
         List<Contato> contatos = listarContatos.execute(cliente.getId());
 

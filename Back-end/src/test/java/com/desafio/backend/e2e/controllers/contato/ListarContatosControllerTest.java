@@ -5,6 +5,8 @@ import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,8 +49,8 @@ class ListarContatosControllerTest {
         cliente = clienteRepository.save(
                 new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), null)
         );
-        contatoRepository.save(new Contato(null, cliente.getId(), "Email", "joao@email.com", null));
-        contatoRepository.save(new Contato(null, cliente.getId(), "Telefone", "11999999999", null));
+        contatoRepository.save(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), null));
+        contatoRepository.save(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.TELEFONE, "11999999999"), null));
     }
 
     @AfterEach

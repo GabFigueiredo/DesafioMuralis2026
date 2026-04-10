@@ -4,6 +4,8 @@ import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
+import com.desafio.backend.enterprise.contato.enums.TipoContato;
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,7 +54,11 @@ class CadastrarContatoControllerTest {
     @Test
     void deveCadastrarContatoComSucesso() {
 
-        Contato contato = new Contato(null, null, "Email", "joao@email.com", "alguma coisa");
+        Map<String, Object> contato = Map.of(
+                "tipo", "EMAIL",
+                "valor", "joao@email.com",
+                "observacao", "alguma coisa"
+        );
 
         var result = client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -70,7 +77,11 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar400QuandoTipoVazio() {
 
-        Contato contato = new Contato(null, null, "", "joao@email.com", "alguma coisa");
+        Map<String, Object> contato = Map.of(
+                "tipo", "",
+                "valor", "joao@email.com",
+                "observacao", "alguma coisa"
+        );
 
         client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -82,7 +93,11 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar400QuandoValorVazio() {
 
-        Contato contato = new Contato(null, null, "Email", "", "alguma coisa");
+        Map<String, Object> contato = Map.of(
+                "tipo", "EMAIL",
+                "valor", "",
+                "observacao", "alguma coisa"
+        );
 
         client.post()
                 .uri("/clientes/" + cliente.getId() + "/contatos")
@@ -94,7 +109,11 @@ class CadastrarContatoControllerTest {
     @Test
     void deveRetornar404QuandoClienteNaoExiste() {
 
-        Contato contato = new Contato(null, null, "Email", "joao@email.com", "alguma coisa");
+        Map<String, Object> contato = Map.of(
+                "tipo", "EMAIL",
+                "valor", "joao@email.com",
+                "observacao", "alguma coisa"
+        );
 
         client.post()
                 .uri("/clientes/9999/contatos")

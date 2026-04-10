@@ -1,19 +1,19 @@
 package com.desafio.backend.enterprise.contato;
 
+import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
+
 public class Contato {
     private Integer id;
     private Integer clienteId;
-    private String tipo;
-    private String valor;
+    private ContatoValor contatoValor;
     private String observacao;
 
     public Contato() {}
 
-    public Contato(Integer id, Integer clienteId, String tipo, String valor, String observacao) {
+    public Contato(Integer id, Integer clienteId,ContatoValor contatoValor,String observacao) {
         this.id = id;
         this.clienteId = clienteId;
-        this.tipo = tipo;
-        this.valor = valor;
+        this.contatoValor = contatoValor;
         this.observacao = observacao;
     }
 
@@ -24,11 +24,8 @@ public class Contato {
     public Integer getClienteId() { return clienteId; }
     public void setClienteId(Integer clienteId) { this.clienteId = clienteId; }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public String getValor() { return valor; }
-    public void setValor(String valor) { this.valor = valor; }
+    public ContatoValor getContatoValor() { return contatoValor; }
+    public void setContatoValor(ContatoValor contatoValor) { this.contatoValor = contatoValor; }
 
     public String getObservacao() { return observacao; }
     public void setObservacao(String observacao) { this.observacao = observacao; }

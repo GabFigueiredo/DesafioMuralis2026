@@ -17,10 +17,10 @@ public class EditarContatoUseCase {
         contatoRepository.findById(contato.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado."));
 
-        if (contato.getTipo() == null || contato.getTipo().isBlank())
+        if (contato.getContatoValor().getTipo() == null)
             throw new IllegalArgumentException("Tipo do contato é obrigatório.");
 
-        if (contato.getValor() == null || contato.getValor().isBlank())
+        if (contato.getContatoValor().getValue() == null || contato.getContatoValor().getValue().isBlank())
             throw new IllegalArgumentException("Valor do contato é obrigatório.");
 
         contatoRepository.update(contato);

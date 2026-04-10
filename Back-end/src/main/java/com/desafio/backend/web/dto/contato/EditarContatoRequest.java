@@ -1,6 +1,6 @@
 package com.desafio.backend.web.dto.contato;
 
-public class CadastrarContatoRequest {
+public class EditarContatoRequest {
     private String tipo;
     private String valor;
     private String observacao;
