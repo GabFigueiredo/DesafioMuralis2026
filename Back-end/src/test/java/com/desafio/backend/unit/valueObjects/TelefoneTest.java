@@ -54,8 +54,6 @@ class TelefoneTest {
         @DisplayName("Deve formatar celular corretamente com 11 dígitos")
         void deveFormatarCelularCorretamente() {
             Telefone Telefone = new Telefone("11912345678");
-            System.out.println("VALOR DO TELEFONE");
-            System.out.println(Telefone.getFormatted());
             assertEquals("(11) 91234-5678", Telefone.getFormatted());
         }
 
