@@ -2,10 +2,16 @@
 
 Este projeto é uma aplicação web de gerenciamento de clientes e contatos. Nela é possível cadastrar, visualizar, editar e excluir clientes, além de gerenciar os contatos vinculados a cada um deles. A aplicação também conta com busca por nome e CPF, paginação e uma interface limpa e responsiva.
 
+## Requisitos Implementados
+
+
+
 ---
 
 ## Sumário
-
+- [Requisitos Implementados](#requisitos-implementados)
+  - [Requisitos Funcionais](#requisitos-funcionais)
+  - [Regras de Negócio](#regras-de-negócio)
 - [Uso de IA durante o desenvolvimento](#uso-de-ia-durante-o-desenvolvimento)
 - [Banco de Dados](#banco-de-dados)
 - [Back-end](#back-end)
@@ -25,6 +31,29 @@ Este projeto é uma aplicação web de gerenciamento de clientes e contatos. Nel
   - [Fluxo de uma Requisição](#fluxo-de-uma-requisição-1)
 
 ---
+
+### Requisitos Funcionais
+
+- [x] **RF01** — Cadastro de clientes com Nome, CPF, Data de Nascimento e Endereço
+- [x] **RF02** — Edição dos dados de um cliente cadastrado
+- [x] **RF03** — Exclusão de um cliente cadastrado
+- [x] **RF04** — Listagem de todos os clientes cadastrados
+- [x] **RF05** — Busca de cliente por Nome ou CPF
+- [x] **RF06** — Cadastro de contatos para um cliente com Tipo, Valor e Observação
+- [x] **RF07** — Edição dos contatos de um cliente
+- [x] **RF08** — Exclusão de um contato de um cliente
+- [x] **RF09** — Listagem de todos os contatos de um cliente específico
+
+### Regras de Negócio
+
+- [x] **RN01** — Nome e CPF são obrigatórios no cadastro do cliente
+- [x] **RN02** — Tipo e Valor do Contato são obrigatórios no cadastro do contato
+- [x] **RN03** — O CPF deve ser único no sistema
+- [x] **RN04** — O Nome do cliente não pode estar vazio
+- [x] **RN05** — A Data de Nascimento deve ser válida
+- [x] **RN06** — Um cliente pode ter mais de um contato cadastrado
+- [x] **RN07** — Ao excluir um cliente, todos os seus contatos são removidos automaticamente
+- [x] **RN08** — Os dados são validados antes de permitir cadastro ou edição
 
 ## Uso de IA durante o desenvolvimento
 
