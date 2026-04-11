@@ -1,5 +1,7 @@
 package com.desafio.backend.e2e.controllers.contato;
 
+import com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCase;
+import com.desafio.backend.application.useCases.contato.CadastrarContatoUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
@@ -18,10 +20,6 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class ListarContatosControllerTest {
@@ -37,7 +35,13 @@ class ListarContatosControllerTest {
     @Autowired
     private IContatoRepository contatoRepository;
 
-    private Cliente cliente;
+    @Autowired
+    private CadastrarClienteUseCase cadastrarCliente;
+
+    @Autowired
+    private CadastrarContatoUseCase cadastrarContato;
+
+    private Integer clienteId;
 
     @BeforeEach
     void setup() {
@@ -46,59 +50,79 @@ class ListarContatosControllerTest {
                 .baseUrl("http://localhost:" + port)
                 .build();
 
-        cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), null)
+        Cliente cliente = cadastrarCliente.execute(
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A")
         );
-        contatoRepository.save(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), null));
-        contatoRepository.save(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.TELEFONE, "11999999999"), null));
+        clienteId = cliente.getId();
+
+        cadastrarContato.execute(new Contato(null, clienteId, new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "obs1"));
+        cadastrarContato.execute(new Contato(null, clienteId, new ContatoValor(TipoContato.TELEFONE, "11912345678"), "obs2"));
     }
 
     @AfterEach
     void tearDown() {
-        clienteRepository.findAll().forEach(c -> clienteRepository.delete(c.getId()));
+        contatoRepository.findAll(0, 1000).content().forEach(c -> contatoRepository.delete(c.getId()));
+        clienteRepository.findAll(0, 1000).content().forEach(c -> clienteRepository.delete(c.getId()));
     }
 
     @Test
-    void deveListarContatosDoCliente() {
-
-        var result = client.get()
-                .uri("/clientes/" + cliente.getId() + "/contatos")
+    void deveRetornarPaginaDeContatos() {
+        client.get()
+                .uri("/clientes/" + clienteId + "/contatos?page=0&size=10")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Contato[].class)
-                .returnResult();
+                .expectBody()
+                .jsonPath("$.content").isArray()
+                .jsonPath("$.page").isEqualTo(0)
+                .jsonPath("$.size").isEqualTo(10)
+                .jsonPath("$.totalElements").isNumber();
+    }
 
-        Contato[] response = result.getResponseBody();
-
-        assertThat(response).isNotNull();
-        assertThat(response.length).isEqualTo(2);
+    @Test
+    void deveRespeitarTamanhoDaPagina() {
+        client.get()
+                .uri("/clientes/" + clienteId + "/contatos?page=0&size=1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.content.length()").isEqualTo(1);
     }
 
     @Test
     void deveRetornarListaVaziaParaClienteSemContatos() {
-
-        Cliente semContatos = clienteRepository.save(
-                new Cliente(null, "Maria", new CPF("52998224725"), LocalDate.of(1992, 3, 3), "Rua A, 123")
+        Cliente semContatos = cadastrarCliente.execute(
+                new Cliente(null, "Maria", new CPF("52998224725"), LocalDate.of(1992, 3, 3), "Rua B")
         );
 
-        var response = client.get()
-                .uri("/clientes/" + semContatos.getId() + "/contatos")
+        client.get()
+                .uri("/clientes/" + semContatos.getId() + "/contatos?page=0&size=10")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Contato[].class)
-                .returnResult()
-                .getResponseBody();
-
-        assertNotNull(response);
-        assertEquals(0, response.length);
+                .expectBody()
+                .jsonPath("$.content.length()").isEqualTo(0);
     }
 
     @Test
     void deveRetornar404QuandoClienteNaoExiste() {
-
         client.get()
-                .uri("/clientes/9999/contatos")
+                .uri("/clientes/9999/contatos?page=0&size=10")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void deveRetornar400QuandoPageNegativa() {
+        client.get()
+                .uri("/clientes/" + clienteId + "/contatos?page=-1&size=10")
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void deveRetornar400QuandoSizeInvalido() {
+        client.get()
+                .uri("/clientes/" + clienteId + "/contatos?page=0&size=0")
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }

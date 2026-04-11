@@ -30,11 +30,6 @@ public class CadastrarContatoUseCase {
         if (contato.getContatoValor().getTipo() == null)
             throw new IllegalArgumentException("Tipo do contato é obrigatório.");
 
-        System.out.println("BATEU AQUI");
-        System.out.println("BATEU AQUI");
-        System.out.println("BATEU AQUI");
-        System.out.println("BATEU AQUI");
-
         if (contato.getContatoValor().getValue() == null || contato.getContatoValor().getValue().isBlank())
             throw new IllegalArgumentException("Valor do contato é obrigatório.");
 

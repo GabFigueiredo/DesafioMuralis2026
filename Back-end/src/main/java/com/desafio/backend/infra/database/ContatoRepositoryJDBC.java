@@ -4,6 +4,7 @@ import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import com.desafio.backend.enterprise.contato.enums.TipoContato;
 import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,14 +29,34 @@ public class ContatoRepositoryJDBC implements IContatoRepository {
     private final RowMapper<Contato> rowMapper = (rs, rowNum) -> new Contato(
             rs.getInt("id"),
             rs.getInt("cliente_id"),
-            new ContatoValor(TipoContato.valueOf(rs.getString("tipo")), rs.getString("valor")),
+            new ContatoValor(TipoContato.valueOf(rs.getString("tipo").toUpperCase()), rs.getString("valor")),
             rs.getString("observacao")
     );
 
     @Override
-    public List<Contato> findByClienteId(Integer clienteId) {
-        String sql = "SELECT * FROM contato WHERE cliente_id = ?";
-        return jdbc.query(sql, rowMapper, clienteId);
+    public Page<Contato> findAll(int page, int size) {
+        String sql = "SELECT * FROM contato LIMIT ? OFFSET ?";
+        int offset = page * size;
+        List<Contato> content = jdbc.query(sql, rowMapper, size, offset);
+
+        Long total = jdbc.queryForObject("SELECT COUNT(*) FROM contato", Long.class);
+        long totalElements = total != null ? total : 0L;
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        return new Page<>(content, page, size, totalElements, totalPages);
+    }
+
+    @Override
+    public Page<Contato> findByClienteId(Integer clienteId, int page, int size) {
+        String sql = "SELECT * FROM contato WHERE cliente_id = ? LIMIT ? OFFSET ?";
+        int offset = page * size;
+        List<Contato> content = jdbc.query(sql, rowMapper, clienteId, size, offset);
+
+        Long total = jdbc.queryForObject("SELECT COUNT(*) FROM contato WHERE cliente_id = ?", Long.class, clienteId);
+        long totalElements = total != null ? total : 0L;
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        return new Page<>(content, page, size, totalElements, totalPages);
     }
 
     @Override
@@ -61,7 +82,7 @@ public class ContatoRepositoryJDBC implements IContatoRepository {
             );
 
             ps.setInt(1, contato.getClienteId());
-            ps.setString(2, contato.getContatoValor().getTipo().toString());
+            ps.setString(2, contato.getContatoValor().getTipo().toString().toUpperCase());
             ps.setString(3, contato.getContatoValor().getValue());
             ps.setString(4, contato.getObservacao());
 

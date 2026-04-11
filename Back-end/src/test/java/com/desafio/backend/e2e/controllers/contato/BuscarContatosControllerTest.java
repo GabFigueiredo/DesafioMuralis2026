@@ -17,11 +17,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.LocalDate;
-import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class EditarContatoControllerTest {
+class BuscarContatosControllerTest {
 
     private RestTestClient client;
 
@@ -45,65 +48,35 @@ class EditarContatoControllerTest {
                 .build();
 
         cliente = clienteRepository.save(
-                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
+                new Cliente(null, "João Silva", new CPF("63929247011"), LocalDate.of(1990, 1, 1), null)
         );
-
         contato = contatoRepository.save(
-                new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), null)
+                new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "obs")
         );
     }
 
     @AfterEach
     void tearDown() {
-        clienteRepository.findAll(0, 10).content().forEach(c -> clienteRepository.delete(c.getId()));
+        contatoRepository.findAll(0, 1000).content().forEach(c -> contatoRepository.delete(c.getId()));
+        clienteRepository.findAll(0, 1000).content().forEach(c -> clienteRepository.delete(c.getId()));
     }
 
     @Test
-    void deveEditarContatoComSucesso() {
-
-        contato.setContatoValor(new ContatoValor(TipoContato.EMAIL, "novo@email.com"));
-
-        Map<String, Object> payload = Map.of(
-                "tipo", "EMAIL",
-                "valor", "gabriel@email.com",
-                "observacao", "outra coisa"
-        );
-
-        client.put()
-                .uri("/clientes/" + cliente.getId() + "/contatos/" + contato.getId())
-                .body(payload)
+    void deveBuscarContatoPorId() {
+        client.get()
+                .uri("/contatos/" + contato.getId())
                 .exchange()
-                .expectStatus().isNoContent();
-    }
-
-    @Test
-    void deveRetornar400QuandoValorVazio() {
-
-        Map<String, Object> payload = Map.of(
-                "tipo", "EMAIL",
-                "valor", "",
-                "observacao", "outra coisa"
-        );
-
-        client.put()
-                .uri("/clientes/" + cliente.getId() + "/contatos/" + contato.getId())
-                .body(payload)
-                .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(contato.getId())
+                .jsonPath("$.contatoValor.tipo").isEqualTo("EMAIL")
+                .jsonPath("$.contatoValor.value").isEqualTo("joao@email.com");
     }
 
     @Test
     void deveRetornar404QuandoContatoNaoExiste() {
-
-        Map<String, Object> payload = Map.of(
-                "tipo", "EMAIL",
-                "valor", "gabriel@email.com",
-                "observacao", "outra coisa"
-        );
-
-        client.put()
-                .uri("/clientes/" + cliente.getId() + "/contatos/9999")
-                .body(payload)
+        client.get()
+                .uri("/contatos/9999")
                 .exchange()
                 .expectStatus().isNotFound();
     }

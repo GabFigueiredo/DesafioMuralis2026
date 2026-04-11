@@ -9,6 +9,8 @@ import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.enums.TipoContato;
 import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
+import com.desafio.backend.enterprise.pagination.Page;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,9 +18,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -34,32 +36,69 @@ class ListarContatosUseCaseTest {
     @Autowired
     private ListarContatosUseCase listarContatos;
 
+    private Integer clienteId;
+
+    @BeforeEach
+    void setup() {
+        Cliente cliente = cadastrarCliente.execute(
+                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A")
+        );
+        clienteId = cliente.getId();
+    }
+
     @Test
     void deveListarContatosDoCliente() {
-        Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
-        );
-        cadastrarContato.execute(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "alguma coisa"));
-        cadastrarContato.execute(new Contato(null, cliente.getId(), new ContatoValor(TipoContato.TELEFONE, "11999999999"), "alguma coisa"));
+        cadastrarContato.execute(new Contato(null, clienteId, new ContatoValor(TipoContato.TELEFONE, "11999990001"), "Celular"));
+        cadastrarContato.execute(new Contato(null, clienteId, new ContatoValor(TipoContato.EMAIL, "joao@email.com"), "Email"));
 
-        List<Contato> contatos = listarContatos.execute(cliente.getId());
+        Page<Contato> result = listarContatos.findByClientId(clienteId, 0, 10);
 
-        assertEquals(2, contatos.size());
+        assertThat(result.content()).hasSize(2);
     }
 
     @Test
-    void deveLancarExcecaoQuandoClienteNaoExiste() {
-        assertThrows(ResourceNotFoundException.class, () -> listarContatos.execute(9999));
+    void deveLancarExcecaoQuandoClienteNaoExistir() {
+        assertThatThrownBy(() -> listarContatos.findByClientId(9999, 0, 10))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Cliente não encontrado");
     }
 
     @Test
-    void deveRetornarListaVaziaSeClienteSemContatos() {
-        Cliente cliente = cadastrarCliente.execute(
-                new Cliente(null, "João", new CPF("63929247011"), LocalDate.of(1990, 1, 1), "Rua A, 123")
-        );
+    void deveLancarExcecaoQuandoPaginaNegativa() {
+        assertThatThrownBy(() -> listarContatos.findByClientId(clienteId, -1, 10))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("página não pode ser negativo");
+    }
 
-        List<Contato> contatos = listarContatos.execute(cliente.getId());
+    @Test
+    void deveLancarExcecaoQuandoTamanhoInvalido() {
+        assertThatThrownBy(() -> listarContatos.findByClientId(clienteId, 0, 0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("tamanho da página");
 
-        assertTrue(contatos.isEmpty());
+        assertThatThrownBy(() -> listarContatos.findByClientId(clienteId, 0, 101))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("tamanho da página");
+    }
+
+    @Test
+    void deveRetornarPaginaVaziaQuandoClienteSemContatos() {
+        Page<Contato> result = listarContatos.findByClientId(clienteId, 0, 10);
+
+        assertThat(result.content()).isEmpty();
+    }
+
+    @Test
+    void deveRespeitorPaginacao() {
+        for (int i = 0; i < 5; i++) {
+            cadastrarContato.execute(new Contato(null, clienteId, new ContatoValor(TipoContato.TELEFONE, "1199999000" + i), "Contato " + i));
+        }
+
+        Page<Contato> page0 = listarContatos.findByClientId(clienteId, 0, 2);
+        Page<Contato> page1 = listarContatos.findByClientId(clienteId, 1, 2);
+
+        assertThat(page0.content()).hasSize(2);
+        assertThat(page1.content()).hasSize(2);
+        assertThat(page0.content().get(0).getId()).isNotEqualTo(page1.content().get(0).getId());
     }
 }

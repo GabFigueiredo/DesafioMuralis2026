@@ -4,6 +4,7 @@ import com.desafio.backend.application.useCases.cliente.BuscarClienteUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,12 @@ public class BuscarClienteController {
 
     // Buscar por nome
     @GetMapping("/nome")
-    public ResponseEntity<List<Cliente>> buscarPorNome(@RequestParam String nome) {
-        List<Cliente> clientes = buscarCliente.executeByNome(nome);
-        return ResponseEntity.ok(clientes);
+    public ResponseEntity<Page<Cliente>> buscarPorNome(
+            @RequestParam String nome,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(buscarCliente.executeByNome(nome, page, size));
     }
 
     // Buscar por CPF

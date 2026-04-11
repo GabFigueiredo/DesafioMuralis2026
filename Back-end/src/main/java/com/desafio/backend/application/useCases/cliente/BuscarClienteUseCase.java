@@ -4,6 +4,7 @@ import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +24,10 @@ public class BuscarClienteUseCase {
     }
 
     // RF05 - Search by name or CPF
-    public List<Cliente> executeByNome(String nome) {
+    public Page<Cliente> executeByNome(String nome, int page, int size) {
         if (nome == null || nome.isBlank())
             throw new IllegalArgumentException("Nome para busca não pode ser vazio.");
-        return clienteRepository.findByNome(nome);
+        return clienteRepository.findByNome(nome, page, size);
     }
 
     // RF05 - Search by name or CPF

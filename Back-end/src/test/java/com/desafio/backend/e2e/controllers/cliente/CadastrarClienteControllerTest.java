@@ -39,7 +39,7 @@ class CadastrarClienteControllerTest {
 
     @AfterEach
     void tearDown() {
-        clienteRepository.findAll().forEach(c -> clienteRepository.delete(c.getId()));
+        clienteRepository.findAll(0, 10).content().forEach(c -> clienteRepository.delete(c.getId()));
     }
 
     @Test

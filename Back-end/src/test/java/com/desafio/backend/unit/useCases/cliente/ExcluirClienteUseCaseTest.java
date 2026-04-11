@@ -10,6 +10,7 @@ import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import com.desafio.backend.enterprise.contato.enums.TipoContato;
 import com.desafio.backend.enterprise.contato.valueObjects.ContatoValor;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,8 +60,8 @@ class ExcluirClienteUseCaseTest {
         excluirCliente.execute(salvo.getId());
 
         // cascade should have removed contacts
-        List<Contato> contatos = contatoRepository.findByClienteId(salvo.getId());
-        assertTrue(contatos.isEmpty());
+        Page<Contato> contatos = contatoRepository.findByClienteId(salvo.getId(), 0, 10);
+        assertTrue(contatos.content().isEmpty());
     }
 
     @Test

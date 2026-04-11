@@ -3,6 +3,7 @@ package com.desafio.backend.infra.database;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -37,9 +38,16 @@ public class ClienteRepositoryJDBC implements IClienteRepository {
     );
 
     @Override
-    public List<Cliente> findAll() {
-        String sql = "SELECT * FROM cliente";
-        return jdbc.query(sql, rowMapper);
+    public Page<Cliente> findAll(int page, int size) {
+        String sql = "SELECT * FROM cliente LIMIT ? OFFSET ?";
+        int offset = page * size;
+        List<Cliente> content = jdbc.query(sql, rowMapper, size, offset);
+
+        Long total = jdbc.queryForObject("SELECT COUNT(*) FROM cliente", Long.class);
+        long totalElements = total != null ? total : 0L;
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        return new Page<>(content, page, size, totalElements, totalPages);
     }
 
     @Override
@@ -57,9 +65,19 @@ public class ClienteRepositoryJDBC implements IClienteRepository {
     }
 
     @Override
-    public List<Cliente> findByNome(String nome) {
-        String sql = "SELECT * FROM cliente WHERE LOWER(nome) LIKE LOWER(?)";
-        return jdbc.query(sql, rowMapper, "%" + nome + "%");
+    public Page<Cliente> findByNome(String nome, int page, int size) {
+        String sql = "SELECT * FROM cliente WHERE LOWER(nome) LIKE LOWER(?) LIMIT ? OFFSET ?";
+        int offset = page * size;
+        List<Cliente> content = jdbc.query(sql, rowMapper, "%" + nome + "%", size, offset);
+
+        Long total = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM cliente WHERE LOWER(nome) LIKE LOWER(?)",
+                Long.class, "%" + nome + "%"
+        );
+        long totalElements = total != null ? total : 0L;
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        return new Page<>(content, page, size, totalElements, totalPages);
     }
 
     @Override

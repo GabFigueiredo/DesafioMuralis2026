@@ -2,9 +2,11 @@ package com.desafio.backend.web.controllers.cliente;
 
 import com.desafio.backend.application.useCases.cliente.ListarClientesUseCase;
 import com.desafio.backend.enterprise.cliente.Cliente;
+import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +22,10 @@ public class ListarClientesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listar() {
-        return ResponseEntity.ok(listarClientes.execute());
+    public ResponseEntity<Page<Cliente>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(listarClientes.execute(page, size));
     }
 }

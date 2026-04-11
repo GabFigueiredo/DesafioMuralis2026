@@ -44,8 +44,7 @@ class BuscarClienteControllerTest {
 
     @AfterEach
     void tearDown() {
-        clienteRepository.findAll()
-                .forEach(c -> clienteRepository.delete(c.getId()));
+        clienteRepository.findAll(0, 10).content().forEach(c -> clienteRepository.delete(c.getId()));
     }
 
     @Test
@@ -66,17 +65,23 @@ class BuscarClienteControllerTest {
 
     @Test
     void deveBuscarClientePorNome() {
-
-        var response = client.get()
-                .uri("/clientes/nome?nome=João")
+        var result = client.get()
+                .uri("/clientes/nome?nome=João&page=0&size=10")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Cliente[].class)
-                .returnResult()
-                .getResponseBody();
+                .expectBody()
+                .jsonPath("$.content").isArray()
+                .jsonPath("$.content.length()").isEqualTo(1)
+                .jsonPath("$.totalElements").isEqualTo(1)
+                .jsonPath("$.page").isEqualTo(0);
+    }
 
-        assertNotNull(response);
-        assertTrue(response.length > 0);
+    @Test
+    void deveRetornar400QuandoNomeVazio() {
+        client.get()
+                .uri("/clientes/nome?nome=&page=0&size=10")
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
@@ -88,12 +93,4 @@ class BuscarClienteControllerTest {
                 .expectStatus().isNotFound();
     }
 
-    @Test
-    void deveRetornar400QuandoNomeVazio() {
-
-        client.get()
-                .uri("/clientes/nome?nome=")
-                .exchange()
-                .expectStatus().isBadRequest();
-    }
 }
