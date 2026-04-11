@@ -1,6 +1,4 @@
-CREATE DATABASE IF NOT EXISTS desafio_muralis
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS desafio_muralis;
 
 USE desafio_muralis;
 
@@ -10,7 +8,7 @@ CREATE TABLE cliente (
                          cpf VARCHAR(11) NOT NULL UNIQUE,
                          data_nascimento DATE,
                          endereco VARCHAR(255)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE contato (
                          id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,8 +21,7 @@ CREATE TABLE contato (
                              FOREIGN KEY (cliente_id)
                                  REFERENCES cliente(id)
                                  ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
+);
 INSERT INTO cliente (nome, cpf, data_nascimento, endereco) VALUES
     ('Lucas Silva', '12345678909', '1990-05-10', 'Rua A, 123'),
     ('Maria Oliveira', '23456789092', '1985-08-22', 'Rua B, 456'),
@@ -38,13 +35,13 @@ INSERT INTO cliente (nome, cpf, data_nascimento, endereco) VALUES
     ('Camila Martins', '01234567890', '1999-04-17', 'Rua J, 707');
 
 INSERT INTO contato (cliente_id, tipo, valor, observacao) VALUES
-    (2, 'telefone', '11999990001', 'Celular pessoal'),
+    (1, 'telefone', '11999990001', 'Celular pessoal'),
     (2, 'email', 'maria@email.com', 'Email principal'),
-    (2, 'telefone', '11999990003', 'WhatsApp'),
-    (2, 'email', 'ana@email.com', 'Trabalho'),
-    (2, 'telefone', '11999990005', 'Residencial'),
-    (2 'email', 'juliana@email.com', 'Pessoal'),
-    (2, 'telefone', '11999990007', 'Contato principal'),
-    (2, 'email', 'fernanda@email.com', 'Email secundário'),
-    (2, 'telefone', '11999990009', 'Pessoal'),
-    (2, 'email', 'camila@email.com', 'Principal');
+    (3, 'telefone', '11999990003', 'WhatsApp'),
+    (4, 'email', 'ana@email.com', 'Trabalho'),
+    (5, 'telefone', '11999990005', 'Residencial'),
+    (6, 'email', 'juliana@email.com', 'Pessoal'),
+    (7, 'telefone', '11999990007', 'Contato principal'),
+    (8, 'email', 'fernanda@email.com', 'Whatsapp'),
+    (9, 'telefone', '11999990009', 'Pessoal'),
+    (10, 'email', 'camila@email.com', 'Principal');

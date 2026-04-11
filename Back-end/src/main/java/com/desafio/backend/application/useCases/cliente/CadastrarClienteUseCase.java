@@ -20,7 +20,7 @@ public class CadastrarClienteUseCase {
         if (cliente.getNome() == null || cliente.getNome().isBlank())
             throw new IllegalArgumentException("Nome é obrigatório.");
 
-        // RN04 - Nome não pode estar vazio (redundant but explicit)
+        // RN04 - Nome não pode estar vazio
         if (cliente.getNome().trim().isEmpty())
             throw new IllegalArgumentException("Nome não pode estar vazio.");
 
