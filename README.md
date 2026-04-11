@@ -42,6 +42,38 @@ Back-end/
     └── init.sql
 ```
 
+## Requisitos
+
+- Node.js 18+
+- Java 17
+- Docker e Docker Compose
+
+---
+
+## Como executar
+
+### Back-end
+
+O back-end sobe junto com o banco de dados MySQL via Docker Compose. O banco é populado automaticamente na primeira execução.
+
+```bash
+cd Back-end
+docker compose up
+```
+
+A API estará disponível em `http://localhost:8080`.
+
+### Front-end
+
+```bash
+cd front-next
+npm install
+npm run dev
+```
+
+O front-end estará disponível em `http://localhost:3000`.
+
+
 ---
 
 ## Back-end
