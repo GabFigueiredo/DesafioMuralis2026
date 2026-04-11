@@ -8,7 +8,7 @@ interface PaginationParams {
 
 export function useClientsQuery({ page, size }: PaginationParams) {
   return useQuery({
-    queryKey: ["clientes"],
+    queryKey: ["clientes", page],
     queryFn: () => getClients(page, size),
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,

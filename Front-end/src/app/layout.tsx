@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -24,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ReactQueryProvider>
-        <body className={`${inter.variable} antialiased bg-zinc-50 flex flex-col max-w-[1440px] mx-auto`}>
+        <body suppressHydrationWarning className={`${inter.variable} antialiased bg-zinc-50 flex flex-col`}>
           <SideBar />
-          <div className="w-full">
+          <div className="w-full max-w-[1440px] mx-auto">
             {children}
           </div>
           {modal}

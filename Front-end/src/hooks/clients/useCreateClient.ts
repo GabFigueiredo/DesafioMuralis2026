@@ -11,13 +11,17 @@ export function useCreateClient() {
     onSuccess: () => {
       toast.success("Cliente registrado com sucesso!");
     },
-    onError: (error: AxiosError<ValidationError[]>) => {
-      console.log(error);
+    onError: (error: any) => {
       if (error?.response?.data) {
-        const errors = error.response.data;
-        errors.forEach((err) => {
-          toast.error(`Erro: ${err.message}`);
-        });
+        console.log(error.response.status)
+        if (error.response.status === 409) {
+          toast.error("CPF já cadastrado. Por favor, utilize outro CPF.");
+          return;
+        }
+        if (error.response.status === 400) {
+          toast.error(error.response.data);
+          return;
+        }
       } else {
         toast.error("Erro ao criar cliente. Tente novamente.");
         console.error("Erro ao criar cliente:", error);

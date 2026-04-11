@@ -7,7 +7,7 @@ interface updateContactProps {
 }
 
 export function updateContact({ id, dadosAtualizados }: updateContactProps) {
-  const response = api.put(`/contatos/${id}`, dadosAtualizados);
+  const response = api.put(`clientes/${dadosAtualizados.clienteId}/contatos/${id}`, dadosAtualizados);
 
   return response;
 }

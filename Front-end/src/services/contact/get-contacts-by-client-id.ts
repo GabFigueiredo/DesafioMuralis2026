@@ -5,9 +5,12 @@ import {
 import api from "@/lib/axios";
 
 export async function getContactsByClientId(
-  client_id: number
+  client_id: number,
+  page: number
 ): Promise<contactResponse> {
-  const response = await api.get(`/clientes/${client_id}/contatos`);
+  const response = await api.get(`/clientes/${client_id}/contatos`,{
+    params: { page, size: 10 },
+  });
   const parsed = ContactResponseSchema.safeParse(response.data);
   
   if (!parsed.success) {

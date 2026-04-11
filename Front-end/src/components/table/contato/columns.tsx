@@ -39,7 +39,7 @@ export const contatoColumns: ColumnDef<IContato>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <SeeContatoItem contatoId={contato.id} />
+            <SeeContatoItem contatoId={contato.id} clienteId={contato.clienteId} />
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -47,12 +47,12 @@ export const contatoColumns: ColumnDef<IContato>[] = [
   },
 ]
 
-export default function SeeContatoItem({ contatoId }: { contatoId: number }) {
+export default function SeeContatoItem({ contatoId, clienteId }: { contatoId: number, clienteId: number }) {
   const router = useRouter();
 
   return (
     <DropdownMenuItem
-      onClick={() => router.push(`/clientes/${contatoId}/contatos/${contatoId}`)}
+      onClick={() => router.push(`/clientes/${clienteId}/contatos/${contatoId}`)}
     >
       Ver Contato
     </DropdownMenuItem>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 export function useRefreshData() {
   const queryClient = useQueryClient();
@@ -11,7 +10,6 @@ export function useRefreshData() {
       queryKey: [queryKey],
       type: "active",
     });
-    toast("Carregando...");
   }
 
   return { handleRefresh };

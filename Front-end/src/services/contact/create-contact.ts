@@ -13,7 +13,7 @@ export async function createContact(
     throw new Error("Dados inválidos para criação de contacte");
   }
 
-  const response = await api.post(`/clientes/${parsed.data.client_id}/contatos`, parsed.data);
+  const response = await api.post(`/clientes/${parsed.data.clienteId}/contatos`, parsed.data);
 
   return response.data;
 }

@@ -5,9 +5,8 @@ import { useClientsQuery } from "@/hooks/clients/useGetClients";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ClientHeader } from "@/components/client/client-header";
-import { SearchBar } from "@/components/client/searchbar";
 import { clienteColumns } from "@/components/table/cliente/columns";
-import { DataTable } from "@/components/table/cliente/data-table";
+import { DataTable } from "@/components/table/data-table";
 
 export function ClientePage() {
   const [page, setPage] = useState(0);
@@ -18,11 +17,7 @@ export function ClientePage() {
     status,
   } = useClientsQuery({page, size: 10});
 
-  useEffect(() => {
-    if (status === "pending" ) {
-      toast.loading("Carregando...");
-    }
-  
+  useEffect(() => {  
     if (status === "success" && isFetchedAfterMount) {
       toast.success("Clientes buscados com sucesso!");
     }
@@ -36,8 +31,6 @@ export function ClientePage() {
   return (
     <main className="w-full flex flex-col pt-8 p-10 gap-4">
       <ClientHeader />
-      <SearchBar />
-
       {status === "pending" ? (
         <>
           {Array.from({ length: 10 }).map((_, index) => (
