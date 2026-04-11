@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Back-end/Back-end.iml" filepath="$PROJECT_DIR$/Back-end/Back-end.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/DesafioMuralis2026.iml" filepath="$PROJECT_DIR$/.idea/DesafioMuralis2026.iml" />
     </modules>
   </component>

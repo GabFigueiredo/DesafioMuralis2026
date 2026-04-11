@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7bcf7259-c3fb-4ea7-ae41-1bd14c377243" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/db/init.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/cliente/BuscarClienteUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/cliente/CadastrarClienteUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/cliente/EditarClienteUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/cliente/ExcluirClienteUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/cliente/ListarClientesUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/contato/CadastrarContatoUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/contato/EditarContatoUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/contato/ExcluirContatoUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/application/useCases/contato/ListarContatosUseCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/enterprise/cliente/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/enterprise/cliente/IClienteRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/enterprise/contato/Contato.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/enterprise/contato/IContatoRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/infra/database/ClienteRepositoryJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/main/java/com/desafio/backend/infra/database/ContatoRepositoryJDBC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/cliente/BuscarClienteUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/cliente/CadastrarClienteUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/cliente/EditarClienteUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/cliente/ExcluirClienteUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/cliente/ListarClientesUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/contato/CadastrarContatoUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/contato/EditarContatoUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/contato/ExcluirContatoUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/java/com/desafio/backend/application/useCases/contato/ListarContatosUseCaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/resources/application-test.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back-end/src/test/resources/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Back-end/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back-end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Back-end/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3C1vjjRKmDkv0SltE5BES9Nx4Z4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.BackEndApplicationTests.executor": "Run",
+    "JUnit.BuscarClienteUseCaseTest.executor": "Run",
+    "JUnit.CadastrarClienteUseCaseTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/gabri/IdeaProjects/DesafioMuralis2026/Back-end",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gabri\IdeaProjects\DesafioMuralis2026\Back-end" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.desafio.backend.application.useCases.contato" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.BackEndApplicationTests">
+    <configuration name="BackEndApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.desafio.backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.desafio.backend" />
+      <option name="MAIN_CLASS_NAME" value="com.desafio.backend.BackEndApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BuscarClienteUseCaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.desafio.backend.application.useCases.cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.desafio.backend.application.useCases.cliente" />
+      <option name="MAIN_CLASS_NAME" value="com.desafio.backend.application.useCases.cliente.BuscarClienteUseCaseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CadastrarClienteUseCaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Back-end" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.desafio.backend.application.useCases.cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.desafio.backend.application.useCases.cliente" />
+      <option name="MAIN_CLASS_NAME" value="com.desafio.backend.application.useCases.cliente.CadastrarClienteUseCaseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackEndApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Back-end" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.desafio.backend.BackEndApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BackEndApplicationTests" />
+        <item itemvalue="JUnit.CadastrarClienteUseCaseTest" />
+        <item itemvalue="JUnit.BuscarClienteUseCaseTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7bcf7259-c3fb-4ea7-ae41-1bd14c377243" name="Changes" comment="" />
+      <created>1775566028696</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775566028696</updated>
+      <workItem from="1775566031046" duration="9358000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
