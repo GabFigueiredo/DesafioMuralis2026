@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useGetContactById(id: string) {
   return useQuery({
-    queryKey: ["contatos/" + id],
+    queryKey: ["contatos", id],
     queryFn: () => getContactByItsId(id),
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,

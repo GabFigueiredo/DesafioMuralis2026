@@ -1,14 +1,17 @@
 import { contactRequest } from "@/interfaces/contact/contato-request-schema";
 import { ValidationError } from "@/interfaces/validation-error";
 import { createContact } from "@/services/contact/create-contact";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 export function useCreateContact() {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: (data: contactRequest) => createContact(data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contatos"] });
       toast.success("Contato registrado com sucesso!");
     },
     onError: (error: AxiosError<ValidationError[]>) => {

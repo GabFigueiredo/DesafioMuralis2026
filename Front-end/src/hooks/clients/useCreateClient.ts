@@ -1,14 +1,15 @@
 import { clientRequest } from "@/interfaces/client/cliente-request-schema";
-import { ValidationError } from "@/interfaces/validation-error";
 import { createClient } from "@/services/client/create-clients";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export function useCreateClient() {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: (data: clientRequest) => createClient(data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clientes"] });
       toast.success("Cliente registrado com sucesso!");
     },
     onError: (error: any) => {
