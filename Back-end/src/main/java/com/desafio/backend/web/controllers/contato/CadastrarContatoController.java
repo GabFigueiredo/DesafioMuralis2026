@@ -23,7 +23,7 @@ public class CadastrarContatoController {
     public ResponseEntity<Contato> cadastrar(@PathVariable Integer clienteId, @RequestBody CadastrarContatoRequest request) {
         Contato novoContato = new Contato(
                 null, clienteId,
-                new ContatoValor(TipoContato.valueOf(request.getTipo()), request.getValor()),
+                new ContatoValor(TipoContato.valueOf(request.getTipo().toUpperCase()), request.getValor()),
                 request.getObservacao()
         );
 
