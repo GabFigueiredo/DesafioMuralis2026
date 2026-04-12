@@ -5,8 +5,10 @@ import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CadastrarContatoUseCase {
     private final IContatoRepository contatoRepository;
     private final IClienteRepository clienteRepository;

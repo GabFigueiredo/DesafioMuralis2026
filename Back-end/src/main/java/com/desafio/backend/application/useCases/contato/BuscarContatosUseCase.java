@@ -6,10 +6,12 @@ import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class BuscarContatosUseCase {
     private final IContatoRepository contatoRepository;
 

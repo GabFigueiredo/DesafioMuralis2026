@@ -5,10 +5,12 @@ import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 @Service
+@Transactional
 public class EditarClienteUseCase {
     private final IClienteRepository clienteRepository;
 

@@ -4,10 +4,12 @@ import com.desafio.backend.application.exceptions.ResourceAlreadyExists;
 import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 @Service
+@Transactional
 public class CadastrarClienteUseCase {
     private final IClienteRepository clienteRepository;
 

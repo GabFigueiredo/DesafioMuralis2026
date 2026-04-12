@@ -4,8 +4,10 @@ import com.desafio.backend.enterprise.cliente.Cliente;
 import com.desafio.backend.enterprise.cliente.IClienteRepository;
 import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ListarClientesUseCase {
 
     private final IClienteRepository clienteRepository;

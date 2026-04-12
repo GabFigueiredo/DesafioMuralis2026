@@ -4,8 +4,10 @@ import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.contato.Contato;
 import com.desafio.backend.enterprise.contato.IContatoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class EditarContatoUseCase {
     private final IContatoRepository contatoRepository;
 

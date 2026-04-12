@@ -6,10 +6,12 @@ import com.desafio.backend.application.exceptions.ResourceNotFoundException;
 import com.desafio.backend.enterprise.cliente.valueObjects.CPF;
 import com.desafio.backend.enterprise.pagination.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class BuscarClienteUseCase {
     private final IClienteRepository clienteRepository;
 
