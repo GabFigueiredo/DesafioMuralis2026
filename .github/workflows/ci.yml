@@ -25,6 +25,7 @@ jobs:
           cache: maven
 
       - name: Rodar testes unitários
+        working-directory: Back-end
         run: mvn test -Dtest="**/unit/**" -DfailIfNoTests=false
 
       - name: Publicar relatório
@@ -32,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: relatorio-unitarios
-          path: target/surefire-reports/
+          path: Back-end/target/surefire-reports/
 
   testes-e2e:
     name: Testes E2E
@@ -51,6 +52,7 @@ jobs:
           cache: maven
 
       - name: Rodar testes E2E
+        working-directory: Back-end
         run: mvn test -Dtest="**/e2e/**" -DfailIfNoTests=false
 
       - name: Publicar relatório
@@ -58,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: relatorio-e2e
-          path: target/surefire-reports/
+          path: Back-end/target/surefire-reports/
