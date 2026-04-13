@@ -35,6 +35,14 @@ public class CadastrarContatoUseCase {
         if (contato.getContatoValor().getValue() == null || contato.getContatoValor().getValue().isBlank())
             throw new IllegalArgumentException("Valor do contato é obrigatório.");
 
+        if (contato.getContatoValor().getValue().length() > 100) {
+            throw new IllegalArgumentException("O valor do contato não pode ter mais de 100 caracteres");
+        }
+
+        if (contato.getObservacao().length() > 255) {
+            throw new IllegalArgumentException("A observação não pode ter mais de 255 caracteres");
+        }
+
         return contatoRepository.save(contato);
     }
 }

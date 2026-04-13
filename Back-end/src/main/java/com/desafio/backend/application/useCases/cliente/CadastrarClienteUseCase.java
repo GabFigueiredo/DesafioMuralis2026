@@ -35,6 +35,15 @@ public class CadastrarClienteUseCase {
             throw new ResourceAlreadyExists("CPF já cadastrado.");
         });
 
+        if (cliente.getNome().length() > 100) {
+            throw new IllegalArgumentException("O nome do cliente não pode ter mais de 100 caracteres");
+        }
+
+        if (cliente.getEndereco() != null && cliente.getEndereco().length() > 255) {
+            throw new IllegalArgumentException("O Endereço do cliente não pode ter mais de 255 caracteres");
+        }
+
+
         return clienteRepository.save(cliente);
     }
 }

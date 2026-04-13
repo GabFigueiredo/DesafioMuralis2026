@@ -58,7 +58,7 @@ public class CPF {
                 .map(Character::getNumericValue)
                 .toArray();
 
-        // Validate first check digit
+        // Valida o primeiro dígito verificador
         int sum = 0;
         for (int i = 0; i < 9; i++) {
             sum += digits[i] * (10 - i);
@@ -66,7 +66,7 @@ public class CPF {
         int firstCheck = (sum % 11) < 2 ? 0 : 11 - (sum % 11);
         if (firstCheck != digits[9]) return false;
 
-        // Validate second check digit
+        // Valida o segundo dígito verificador
         sum = 0;
         for (int i = 0; i < 10; i++) {
             sum += digits[i] * (11 - i);
